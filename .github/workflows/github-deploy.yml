@@ -1,0 +1,73 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches: [dev, qa, main]
+
+env:
+  MY_NAME_PROYECT: 'gfaster'
+  ROOT_URL_PROYECT: 'gfaster.com'
+  SECURE_LOG_LEVEL: 'debug'
+  DEPLOY_ENVIRONMENT: ${{ github.base_ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        build-args: |
+          NPM_TOKEN=${{ secrets.NPM_TOKEN }}
+          DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Deploy
+      env:
+        IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        CONTAINER_NAME: ${{ env.MY_NAME_PROYECT }}-${{ env.DEPLOY_ENVIRONMENT }}
+      run: |
+        echo $CONTAINER_NAME
+        if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "dev" ]; then
+          docker-compose -f docker-compose.dev.yml up -d --force-recreate
+        elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "qa" ]; then
+          docker-compose -f docker-compose.qa.yml up -d --force-recreate
+        elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "main" ]; then
+          docker-compose -f docker-compose.main.yml up -d --force-recreate
+        fi
+
+    - name: Update deployment status
+      if: always()
+      uses: chrnorm/deployment-status@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        state: ${{ job.status }}
+        deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+        environment-url: http://taxomarket.com
