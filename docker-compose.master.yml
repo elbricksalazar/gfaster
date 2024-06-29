@@ -7,7 +7,7 @@ version: '3.9'
 #      external: true     
 
 services:
-  gfaster-service-main:
+  gfaster-service-main: 
     environment:
     - IMAGE=${IMAGE}"
     - CONTAINER_NAME=${CONTAINER_NAME}"
