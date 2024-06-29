@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [master]
+    branches: [DEV]
 
 env:
   MY_NAME_PROYECT: 'gfaster'
