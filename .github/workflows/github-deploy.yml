@@ -33,7 +33,7 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
         build-args: |
-          NPM_TOKEN=${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
           DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }}
 
   deploy:
@@ -56,7 +56,7 @@ jobs:
       run: |
         echo $CONTAINER_NAME
         elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
-          docker-compose -f docker-compose.main.yml up -d --force-recreate
+          docker-compose -f docker-compose.mmaster.yml up -d --force-recreate
         fi
 
     - name: Update deployment status
