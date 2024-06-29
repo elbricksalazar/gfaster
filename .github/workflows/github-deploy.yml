@@ -33,7 +33,7 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
         build-args: |
-          NPM_TOKEN=${{ secrets.OKEN }}
+          NPM_TOKEN=${{ secrets.TOKEN }}
           DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }} 
 
   deploy:
@@ -47,7 +47,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.TOKEN }}
     
     - name: Deploy
       env:
