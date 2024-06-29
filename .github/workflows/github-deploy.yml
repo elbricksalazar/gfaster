@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [DEV]
+    branches: [dev]
 
 env:
   MY_NAME_PROYECT: 'gfaster'
@@ -33,7 +33,7 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
         build-args: |
-          NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN=${{ secrets.OKEN }}
           DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }} 
 
   deploy:
@@ -63,7 +63,7 @@ jobs:
       if: always()
       uses: chrnorm/deployment-status@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TOKEN }}
         state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
         environment-url: http://gfaster.com
