@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [dev, qa, main]
+    branches: [master]
 
 env:
   MY_NAME_PROYECT: 'gfaster'
@@ -55,11 +55,7 @@ jobs:
         CONTAINER_NAME: ${{ env.MY_NAME_PROYECT }}-${{ env.DEPLOY_ENVIRONMENT }}
       run: |
         echo $CONTAINER_NAME
-        if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "dev" ]; then
-          docker-compose -f docker-compose.dev.yml up -d --force-recreate
-        elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "qa" ]; then
-          docker-compose -f docker-compose.qa.yml up -d --force-recreate
-        elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "main" ]; then
+        elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
           docker-compose -f docker-compose.main.yml up -d --force-recreate
         fi
 
@@ -70,4 +66,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-        environment-url: http://taxomarket.com
+        environment-url: http://gfaster.com
