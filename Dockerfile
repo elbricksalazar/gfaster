@@ -18,8 +18,11 @@ RUN echo "*****************"
 RUN echo "$DEPLOY_ENVIRONMENT"
 RUN echo "*****************"
 
-RUN npm config set @ncgroup:registry="https://gitlab.com/api/v4/packages/npm/"
-RUN npm config set "//gitlab.com/api/v4/packages/npm/:_authToken"="$NPM_TOKEN"
+RUN npm config set elbricksalazar:registry=https://npm.pkg.github.com/
+RUN npm config set //npm.pkg.github.com/:_authToken=$NPM_TOKEN
+
+# RUN npm config set @ncgroup:registry="https://gitlab.com/api/v4/packages/npm/"
+# RUN npm config set "//gitlab.com/api/v4/packages/npm/:_authToken"="$NPM_TOKEN"
 RUN npm config list
 COPY package*.json ./
 #COPY .npmrc ./
