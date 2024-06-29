@@ -34,7 +34,7 @@ jobs:
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
         build-args: |
           NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }}
+          DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }} 
 
   deploy:
     needs: build
