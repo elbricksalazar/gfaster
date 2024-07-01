@@ -59,13 +59,12 @@ jobs:
       run: |
         echo $CONTAINER_NAME
         elif [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
-          docker-compose -f docker-compose.mmaster.yml up -d --force-recreate
+          docker-compose -f docker-compose.master.yml up -d --force-recreate
         fi
 
     - name: Update deployment status
       if: always()
-      uses: chrnorm/deployment-status@v1
-      with:
+      uses: chrnorm/deployment-status@v2
         token: ${{ secrets.GITHUB_TOKEN }}
         state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
