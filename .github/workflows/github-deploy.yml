@@ -90,7 +90,11 @@ jobs:
         if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
           docker-compose -f docker-compose.master.yml up -d --force-recreate
         fi
-
+        
+  post-deploy:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
     - name: Update deployment status
       uses: chrnorm/deployment-status@v2
       if: always()
