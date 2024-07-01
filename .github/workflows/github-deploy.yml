@@ -85,7 +85,7 @@ jobs:
       run: |
         echo $CONTAINER_NAME
         if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "dev" ]; then
-          docker-composess -f docker-compose.dev.yml up -d --force-recreate
+          docker-compose -f docker-compose.dev.yml up -d --force-recreate
         fi
         if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
           docker-compose -f docker-compose.master.yml up -d --force-recreate
