@@ -1,11 +1,4 @@
 version: '3.9'
-
-# networks:
-#   taxonet:
-#      external: true
-#   bnet:
-#      external: true     
-
 services:
   gfaster-service-main:  
     environment:
@@ -16,11 +9,6 @@ services:
     container_name: "$CONTAINER_NAME"
     labels:
       - "group=${DEPLOY_ENVIRONMENT}"
-    # networks:
-    #   - taxonet
-    #   - bnet
     restart: always
     tty: true
     stdin_open: true
-    # volumes:
-    #   - /home/elbrick/docker-data/taxomarket:/data
