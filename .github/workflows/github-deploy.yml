@@ -100,6 +100,6 @@ jobs:
       if: always()
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        state: ${{ job.status }}
+        state: "success"
         deployment-id: ${{ steps.deployment.outputs.deployment_id }},
   
