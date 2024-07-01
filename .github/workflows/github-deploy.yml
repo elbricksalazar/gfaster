@@ -68,6 +68,7 @@ jobs:
     - name: Update deployment status
       if: always()
       uses: chrnorm/deployment-status@v2
+      with: 
         token: ${{ secrets.GITHUB_TOKEN }}
         state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
