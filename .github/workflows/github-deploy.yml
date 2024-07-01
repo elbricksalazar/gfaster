@@ -73,4 +73,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-        environment-url: http://gfaster.com
+        environment-url: https://taxomarket.com
