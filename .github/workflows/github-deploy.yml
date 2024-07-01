@@ -82,18 +82,20 @@ jobs:
           docker-compose -f docker-compose.master.yml up -d --force-recreate
         fi
 
-    - name: Update deployment status (success)
-      if: success()
-      uses: chrnorm/deployment-status@v2
-      with: 
-        token: ${{ secrets.GITHUB_TOKEN }}
-        state: 'success'
-        deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+    # - name: Update deployment status (success)
+    #   if: success()
+    #   uses: chrnorm/deployment-status@v2
+    #   with: 
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     state: 'success'
+    #     deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
-    - name: Update deployment status (failure)
-      if: failure()
+    - name: Update deployment status
       uses: chrnorm/deployment-status@v2
+      if: always()
       with:
-        token: '${{ github.token }}'
-        state: 'failure'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        state: ${{ job.status }}
         deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+        # env: ${{ steps.deployment.outputs.env }}
+  
