@@ -96,4 +96,4 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'failure'
-        deployment-id: ${{ steps.deployment.outputs.deployment_id }}        
+        deployment-id: '${{ env.DEPLOY_ENVIRONMENT }}'        
