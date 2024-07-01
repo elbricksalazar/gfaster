@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [dev]
 
+permissions:
+  packages: write    
+
 env:
   MY_NAME_PROYECT: 'gfaster'
   ROOT_URL_PROYECT: 'gfaster.com'
