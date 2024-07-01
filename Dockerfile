@@ -34,8 +34,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 9085
+EXPOSE 3000
 
 CMD ["sh", "-c", "npm run start:${ENV_DEPLOY_ENVIRONMENT}"]
 
-# java -jar -Dspring.profiles.active=<profile> <nombre-del-archivo>.jar
+

@@ -6,6 +6,7 @@ on:
 
 permissions:
   packages: write    
+  deployments: write
 
 env:
   MY_NAME_PROYECT: 'gfaster'
@@ -41,7 +42,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [self-hosted, gfaster-runner ]  # This line specifies the self-hosted runner named "pepe"
+    runs-on: [self-hosted, gfaster-runner ]  # This line specifies the self-hosted runner named "gfaster-runner"
     steps:
     - uses: actions/checkout@v2
     
