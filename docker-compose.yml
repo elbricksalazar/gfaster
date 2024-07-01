@@ -8,7 +8,9 @@ services:
     image: "$IMAGE"
     container_name: "$CONTAINER_NAME"
     labels:
-      - "group=${DEPLOY_ENVIRONMENT}"
+    - "group=${DEPLOY_ENVIRONMENT}"
     restart: always
     tty: true
     stdin_open: true
+    ports:
+    - "3000:3000"
