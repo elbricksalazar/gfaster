@@ -5,19 +5,9 @@ on:
     branches: [dev]
 
 permissions:
-  actions: write
-  checks: write
   contents: write
   deployments: write
-  id-token: write
-  issues: write
-  discussions: write
   packages: write
-  pages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
 env:
   MY_NAME_PROYECT: 'gfaster'
   ROOT_URL_PROYECT: 'gfaster.com'
@@ -91,15 +81,4 @@ jobs:
           docker-compose -f docker-compose.master.yml up -d --force-recreate
         fi
         
-  post-deploy:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: Update deployment status
-      uses: chrnorm/deployment-status@v2
-      if: always()
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        state: "success"
-        deployment-id: ${{ steps.deployment.outputs.deployment_id }},
   
