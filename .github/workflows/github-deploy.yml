@@ -36,7 +36,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        tags: ghcr.io/${{ github.repository }}:${{ github.event.pull_request.number }}
         build-args: |
           NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
           DEPLOY_ENVIRONMENT=${{ env.DEPLOY_ENVIRONMENT }} 
@@ -71,7 +71,7 @@ jobs:
     
     - name: Deploy
       env:
-        IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        IMAGE: ghcr.io/${{ github.repository }}:${{ github.event.pull_request.number }}
         CONTAINER_NAME: ${{ env.MY_NAME_PROYECT }}-${{ env.DEPLOY_ENVIRONMENT }}
       run: |
         echo $CONTAINER_NAME
@@ -96,4 +96,4 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'failure'
-        deployment-id: '${{ env.DEPLOY_ENVIRONMENT }}'        
+        deployment-id: ${{ steps.deployment.outputs.deployment_id }}
