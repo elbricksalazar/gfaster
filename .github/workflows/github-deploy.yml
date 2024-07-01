@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [dev,master]
 
 permissions:
   contents: write
@@ -74,11 +74,6 @@ jobs:
         CONTAINER_NAME: ${{ env.MY_NAME_PROYECT }}-${{ env.DEPLOY_ENVIRONMENT }}
       run: |
         echo $CONTAINER_NAME
-        if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "dev" ]; then
-          docker-compose -f docker-compose.dev.yml up -d --force-recreate
-        fi
-        if [ "${{ env.DEPLOY_ENVIRONMENT }}" = "master" ]; then
-          docker-compose -f docker-compose.master.yml up -d --force-recreate
-        fi
+        docker-compose -f docker-compose.yml up -d --force-recreate
         
   
